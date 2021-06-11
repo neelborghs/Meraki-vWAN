@@ -74,7 +74,11 @@
             }
         },
         "meraki_vpn_private_subnets": {
-            "type": "array"
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Meraki custom private subnets field"
+            }
         },
         "vwan_name": {
             "type": "string",
