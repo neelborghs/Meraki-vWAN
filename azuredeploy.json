@@ -73,6 +73,13 @@
                 "description": "Meraki organization name"
             }
         },
+        "meraki_vpn_private_subnets": {
+            "type": "array",
+            "defaultValue": "",
+            "metadata": {
+                "description": "This populates the private subnets field if you need to reach resources in Azure that are not in the effective routes table (Azure Firewall is an example"
+            }
+        },
         "vwan_name": {
             "type": "string",
             "defaultValue": "",
@@ -143,6 +150,10 @@
                         {
                             "name": "meraki_api_key",
                             "value": "[parameters('meraki_api_key')]"
+                        },
+                        {
+                            "name": "meraki_vpn_private_subnets",
+                            "value": "[parameters('meraki_vpn_private_subnets')]"
                         },
                         {
                             "name": "meraki_org_name",
