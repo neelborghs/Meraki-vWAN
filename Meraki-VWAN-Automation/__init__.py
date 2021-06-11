@@ -950,10 +950,10 @@ def main(MerakiTimer: func.TimerRequest) -> None:
             logging.info("updated Meraki VPN Config: " + str(new_meraki_vpns))
 
             # adding logic to append meraki_vpn_private_subnets if not 0 to new_meraki_vpns
-            if len(MerakiConfig.meraki_private_subnets) > 0:
+            if MerakiConfig.meraki_private_subnets:
 
                 # appending meraki_vpn_private_subnets to new_meraki_vpns 
-                new_meraki_vpns = new_meraki_vpns + MerakiConfig.meraki_private_subnets
+                new_meraki_vpns = new_meraki_vpns.append(MerakiConfig.meraki_private_subnets)
                                   
             # Update Meraki VPN config
             update_meraki_vpn = MerakiConfig.sdk_auth.appliance.updateOrganizationApplianceVpnThirdPartyVPNPeers(
