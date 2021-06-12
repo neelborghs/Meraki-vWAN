@@ -682,7 +682,7 @@ class MerakiConfig:
     api_key = os.environ['meraki_api_key'].lower()
     org_name = os.environ['meraki_org_name']
     # converting string to list to later add to the list of subnets for the vpn
-    meraki_private_subnets = os.environ['meraki_vpn_private_subnets']
+    meraki_private_subnets = str(os.environ['meraki_vpn_private_subnets'])
     use_maintenance_window = os.environ['use_maintenance_window']
     maintenance_time_in_utc = int(os.environ['maintenance_time_in_utc'])
     tag_prefix = 'vwan-'
@@ -835,7 +835,7 @@ def main(MerakiTimer: func.TimerRequest) -> None:
                 logging.info(f"Tags found for {network['name']} with hub {vwan_hub_info['name']} \
                     | Tags: {network['tags']}")
                              
-                new_tag_list = network['tags'][:]
+                new_tag_list = network['tags']
 
                 # need network ID in order to obtain device/serial information
                 network_info = network['id']
@@ -915,7 +915,7 @@ def main(MerakiTimer: func.TimerRequest) -> None:
                     logging.info(f"Azure connected subnets including custom prefixes: {azure_connected_subnets}"
 
                 # Get specific vwan tag
-                for tag in new_tag_list[:]:
+                for tag in new_tag_list:
                     if re.match(MerakiConfig.primary_tag_regex, tag):
                         specific_tag = tag
 
