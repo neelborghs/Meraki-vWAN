@@ -681,7 +681,8 @@ def create_virtual_wan_connection(resource_group, vpn_gateway_name, network_name
 class MerakiConfig:
     api_key = os.environ['meraki_api_key'].lower()
     org_name = os.environ['meraki_org_name']
-    meraki_private_subnets = os.environ['meraki_vpn_private_subnets']
+    # converting string to list to later add to the list of subnets for the vpn
+    meraki_private_subnets = os.environ['meraki_vpn_private_subnets'].split(",")
     use_maintenance_window = os.environ['use_maintenance_window']
     maintenance_time_in_utc = int(os.environ['maintenance_time_in_utc'])
     tag_prefix = 'vwan-'
@@ -904,6 +905,12 @@ def main(MerakiTimer: func.TimerRequest) -> None:
                 if vwan_config['connectedVirtualNetworks']:
                     azure_connected_subnets = vwan_config['connectedVirtualNetworks']
 
+                # adding logic to append meraki_vpn_private_subnets if not 0 to new_meraki_vpns
+                if MerakiConfig.meraki_private_subnets:
+
+                    # appending meraki_vpn_private_subnets to new_meraki_vpns 
+                    azure_connected_subnets = azure_connected_subnets + MerakiConfig.meraki_private_subnets
+
                 # Get specific vwan tag
                 for tag in new_tag_list[:]:
                     if re.match(MerakiConfig.primary_tag_regex, tag):
@@ -949,11 +956,6 @@ def main(MerakiTimer: func.TimerRequest) -> None:
 
             logging.info("updated Meraki VPN Config: " + str(new_meraki_vpns))
 
-            # adding logic to append meraki_vpn_private_subnets if not 0 to new_meraki_vpns
-            if MerakiConfig.meraki_private_subnets:
-
-                # appending meraki_vpn_private_subnets to new_meraki_vpns 
-                new_meraki_vpns = new_meraki_vpns.append(MerakiConfig.meraki_private_subnets)
                                   
             # Update Meraki VPN config
             update_meraki_vpn = MerakiConfig.sdk_auth.appliance.updateOrganizationApplianceVpnThirdPartyVPNPeers(
