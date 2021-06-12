@@ -682,7 +682,7 @@ class MerakiConfig:
     api_key = os.environ['meraki_api_key'].lower()
     org_name = os.environ['meraki_org_name']
     # converting string to list to later add to the list of subnets for the vpn
-    meraki_private_subnets = str(os.environ['meraki_vpn_private_subnets']).split(",")
+    meraki_private_subnets = os.environ['meraki_vpn_private_subnets']
     use_maintenance_window = os.environ['use_maintenance_window']
     maintenance_time_in_utc = int(os.environ['maintenance_time_in_utc'])
     tag_prefix = 'vwan-'
@@ -909,7 +909,7 @@ def main(MerakiTimer: func.TimerRequest) -> None:
                 if MerakiConfig.meraki_private_subnets:
 
                     # appending meraki_vpn_private_subnets to new_meraki_vpns 
-                    azure_connected_subnets = azure_connected_subnets + MerakiConfig.meraki_private_subnets
+                    azure_connected_subnets = azure_connected_subnets + MerakiConfig.meraki_private_subnets.split(",")
 
                     # logging the private subnets that will be appended to the azure private subnets
                     logging.info(f"Azure connected subnets including custom prefixes: {azure_connected_subnets}"
