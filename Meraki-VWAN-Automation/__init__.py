@@ -906,7 +906,7 @@ def main(MerakiTimer: func.TimerRequest) -> None:
                     azure_connected_subnets = vwan_config['connectedVirtualNetworks']
 
                 # adding logic to append meraki_vpn_private_subnets if not 0 to new_meraki_vpns
-                if len(MerakiConfig.meraki_private_subnets) > 0:
+                if MerakiConfig.meraki_private_subnets:
 
                     # appending meraki_vpn_private_subnets to new_meraki_vpns 
                     azure_connected_subnets = azure_connected_subnets + MerakiConfig.meraki_private_subnets
