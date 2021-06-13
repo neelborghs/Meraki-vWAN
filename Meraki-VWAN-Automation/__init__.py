@@ -912,7 +912,7 @@ def main(MerakiTimer: func.TimerRequest) -> None:
                     azure_connected_subnets = azure_connected_subnets + MerakiConfig.meraki_private_subnets.split(",")
 
                     # logging the private subnets that will be appended to the azure private subnets
-                    logging.info(f"Azure connected subnets including custom prefixes: {azure_connected_subnets}"
+                    logging.info(f"Azure connected subnets including custom prefixes: {azure_connected_subnets}")
 
                 # Get specific vwan tag
                 for tag in new_tag_list:
