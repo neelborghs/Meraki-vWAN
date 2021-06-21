@@ -75,7 +75,7 @@
         },
         "meraki_vpn_private_subnets": {
             "type": "string",
-            "defaultValue": "",
+            "defaultValue": "169.254.169.254",
             "metadata": {
                 "description": "Meraki custom private subnets field"
             }
