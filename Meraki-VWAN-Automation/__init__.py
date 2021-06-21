@@ -685,6 +685,9 @@ class MerakiConfig:
     if "169.254.169.254" not in str(os.environ['meraki_vpn_private_subnets']):
         # converting string to list to later add to the list of subnets for the vpn
         meraki_private_subnets = str(os.environ['meraki_vpn_private_subnets'])
+    else:
+        # setting meraki_private_subnets to "169.254.169.254"
+        meraki_private_subnets = "169.254.169.254"
     use_maintenance_window = os.environ['use_maintenance_window']
     maintenance_time_in_utc = int(os.environ['maintenance_time_in_utc'])
     tag_prefix = 'vwan-'
@@ -908,7 +911,7 @@ def main(MerakiTimer: func.TimerRequest) -> None:
                     azure_connected_subnets = vwan_config['connectedVirtualNetworks']
 
                 # adding logic to append meraki_vpn_private_subnets if not 0 to new_meraki_vpns
-                if MerakiConfig.meraki_private_subnets:
+                if "169.254.169.254" not in MerakiConfig.meraki_private_subnets:
 
                     # appending meraki_vpn_private_subnets to new_meraki_vpns 
                     azure_connected_subnets = azure_connected_subnets + MerakiConfig.meraki_private_subnets.split(",")
