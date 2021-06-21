@@ -681,8 +681,10 @@ def create_virtual_wan_connection(resource_group, vpn_gateway_name, network_name
 class MerakiConfig:
     api_key = os.environ['meraki_api_key'].lower()
     org_name = os.environ['meraki_org_name']
-    # converting string to list to later add to the list of subnets for the vpn
-    meraki_private_subnets = str(os.environ['meraki_vpn_private_subnets'])
+    # adding conditional statement to detect if meraki_vpn_private_subnets is None or not
+    if meraki_vpn_private_subnets != None:
+        # converting string to list to later add to the list of subnets for the vpn
+        meraki_private_subnets = str(os.environ['meraki_vpn_private_subnets'])
     use_maintenance_window = os.environ['use_maintenance_window']
     maintenance_time_in_utc = int(os.environ['maintenance_time_in_utc'])
     tag_prefix = 'vwan-'
